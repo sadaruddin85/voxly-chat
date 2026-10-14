@@ -3,7 +3,7 @@
 // Handles WhatsApp (WATI) + Web Chat
 // Deploy on Railway.app free tier
 // ============================================
-
+const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const app = express();
