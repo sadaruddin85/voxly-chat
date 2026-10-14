@@ -163,6 +163,10 @@ app.get('/', (req, res) => {
 });
 
 // Backend health check
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 app.get('/health', (req, res) => {
   res.json({
     status: 'Voxly Chat Backend running',
@@ -173,7 +177,6 @@ app.get('/health', (req, res) => {
     time: new Date().toISOString()
   });
 });
-
 // WATI WhatsApp webhook
 app.post('/whatsapp-webhook', async (req, res) => {
   try {
