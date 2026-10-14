@@ -4,11 +4,12 @@
 // Deploy on Railway.app free tier
 // ============================================
 
-const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // ── CONFIG ────────────────────────────────────
 const ANTHROPIC_KEY  = process.env.ANTHROPIC_API_KEY || '';
@@ -156,7 +157,13 @@ async function notifyOwner(phone, userMsg, aiReply) {
 // ── ROUTES ────────────────────────────────────
 
 // Health check
+// Display the Voxly WebChat interface
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Backend health check
+app.get('/health', (req, res) => {
   res.json({
     status: 'Voxly Chat Backend running',
     version: '1.0.0',
