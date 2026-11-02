@@ -3,13 +3,11 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Voxly Web Chat — Client Demo</title>
+<title>Voxly Web Chat &#8212; Client Demo</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh;display:flex;align-items:center;justify-content:center;}
-
-/* DEMO WEBSITE */
 .demo-site{width:100%;max-width:1100px;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px #00000020;}
 .site-header{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;}
 .site-logo{font-size:22px;font-weight:700;color:#fff;}
@@ -24,42 +22,20 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh;display:
 .site-card .icon{font-size:32px;margin-bottom:10px;}
 .site-card h3{font-size:15px;font-weight:700;margin-bottom:6px;}
 .site-card p{font-size:12px;color:#666;line-height:1.6;}
-
-@media(max-width:700px){.site-content{grid-template-columns:1fr;padding:20px 16px;}.site-hero h1{font-size:26px;}.site-nav{display:none;}.chat-window{width:calc(100vw - 40px);}}
-/* CHAT WIDGET */
 .chat-widget{position:fixed;bottom:28px;right:28px;z-index:1000;}
 .chat-bubble{width:60px;height:60px;background:linear-gradient(135deg,#4f8cff,#7b5cff);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 32px #4f8cff60;transition:all .2s;font-size:26px;border:none;}
 .chat-bubble:hover{transform:scale(1.1);}
 .chat-bubble.open{background:linear-gradient(135deg,#ff4757,#ff6b81);}
 .notif{position:absolute;top:-4px;right:-4px;width:20px;height:20px;background:#ff4757;border-radius:50%;border:2px solid #fff;font-size:10px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;}
-
-/* CHAT WINDOW */
-.chat-window{
-  position:absolute;bottom:76px;right:0;
-  width:360px;height:520px;
-  background:#fff;border-radius:20px;
-  box-shadow:0 20px 60px #00000030;
-  display:flex;flex-direction:column;
-  overflow:hidden;
-  transform:scale(0);transform-origin:bottom right;
-  transition:transform .2s cubic-bezier(.34,1.56,.64,1);
-  opacity:0;pointer-events:none;
-}
+.chat-window{position:absolute;bottom:76px;right:0;width:360px;height:520px;background:#fff;border-radius:20px;box-shadow:0 20px 60px #00000030;display:flex;flex-direction:column;overflow:hidden;transform:scale(0);transform-origin:bottom right;transition:transform .2s cubic-bezier(.34,1.56,.64,1);opacity:0;pointer-events:none;}
 .chat-window.open{transform:scale(1);opacity:1;pointer-events:all;}
-
-/* CHAT HEADER */
-.chat-header{
-  background:linear-gradient(135deg,#4f8cff,#7b5cff);
-  padding:16px 18px;display:flex;align-items:center;gap:12px;
-}
+.chat-header{background:linear-gradient(135deg,#4f8cff,#7b5cff);padding:16px 18px;display:flex;align-items:center;gap:12px;}
 .agent-avatar{width:40px;height:40px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
 .agent-info{flex:1;}
 .agent-name{font-size:14px;font-weight:700;color:#fff;}
 .agent-status{font-size:11px;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:4px;}
 .online-dot{width:6px;height:6px;border-radius:50%;background:#00e5a0;box-shadow:0 0 4px #00e5a0;}
 .chat-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:18px;cursor:pointer;padding:4px;}
-
-/* MESSAGES */
 .chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f8faff;}
 .msg{max-width:80%;padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.5;}
 .msg.ai{align-self:flex-start;background:#fff;border:1px solid #e8ecf5;border-radius:4px 16px 16px 16px;color:#333;}
@@ -70,37 +46,23 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh;display:
 .typing-dots span:nth-child(2){animation-delay:.15s;}
 .typing-dots span:nth-child(3){animation-delay:.3s;}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-.msg-time{font-size:10px;color:#aaa;margin-top:3px;text-align:right;}
-
-/* QUICK REPLIES */
 .quick-replies{padding:0 16px 10px;display:flex;gap:6px;flex-wrap:wrap;}
 .qr{background:#fff;border:1.5px solid #4f8cff;color:#4f8cff;border-radius:20px;padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;}
 .qr:hover{background:#4f8cff;color:#fff;}
-
-/* INPUT */
 .chat-input{display:flex;gap:8px;padding:12px 14px;background:#fff;border-top:1px solid #eee;}
 .chat-input input{flex:1;border:1.5px solid #e8ecf5;border-radius:24px;padding:10px 16px;font-size:13px;outline:none;font-family:inherit;transition:border .15s;background:#f8faff;}
 .chat-input input:focus{border-color:#4f8cff;background:#fff;}
 .send-btn{width:38px;height:38px;background:linear-gradient(135deg,#4f8cff,#7b5cff);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
 .send-btn:hover{transform:scale(1.1);}
 .send-btn svg{width:16px;height:16px;fill:#fff;}
-
-/* WA BUTTON */
 .wa-btn{display:flex;align-items:center;gap:8px;padding:10px 16px;background:#25d366;border:none;border-radius:12px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;width:calc(100% - 28px);margin:0 14px 12px;justify-content:center;transition:all .15s;}
 .wa-btn:hover{background:#1da851;}
-
-/* CONFIG PANEL */
-.config{display:none;background:#1a1a2e;padding:20px 28px;border-top:1px solid #333;}
-.config h3{color:#4f8cff;font-size:13px;margin-bottom:12px;}
-.cfg-row{display:flex;gap:10px;margin-bottom:8px;}
-.cfg-inp{flex:1;background:#0d0d1a;border:1px solid #333;border-radius:8px;padding:8px 12px;color:#e8edf5;font-size:12px;font-family:monospace;outline:none;}
-.cfg-inp:focus{border-color:#4f8cff;}
-.cfg-btn{padding:8px 16px;background:#4f8cff;border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.config{display:none;}
+@media(max-width:700px){.site-content{grid-template-columns:1fr;padding:20px 16px;}.site-hero h1{font-size:26px;}.site-nav{display:none;}.chat-window{width:calc(100vw - 40px);}}
 </style>
 </head>
 <body>
 
-<!-- DEMO WEBSITE -->
 <div class="demo-site">
   <div class="site-header">
     <div class="site-logo">City<span>Garden</span> Restaurant</div>
@@ -113,53 +75,42 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh;display:
   </div>
   <div class="site-hero">
     <h1>Fresh Food, Great Memories</h1>
-    <p>Fine dining experience in the heart of the city. Book your table today — our AI assistant is available 24/7.</p>
+    <p>Fine dining experience in the heart of the city. Book your table today &#8212; our AI assistant is available 24/7.</p>
   </div>
   <div class="site-content">
-    <div class="site-card"><div class="icon">🍽️</div><h3>Fresh Cuisine</h3><p>Seasonal ingredients sourced locally every day for the freshest taste.</p></div>
-    <div class="site-card"><div class="icon">📅</div><h3>Easy Booking</h3><p>Chat with our AI assistant anytime — instant table reservations 24/7.</p></div>
-    <div class="site-card"><div class="icon">⭐</div><h3>4.9 Star Rating</h3><p>Over 2,000 happy customers. Rated best restaurant in the city 2025.</p></div>
+    <div class="site-card"><div class="icon">&#127869;&#65039;</div><h3>Fresh Cuisine</h3><p>Seasonal ingredients sourced locally every day for the freshest taste.</p></div>
+    <div class="site-card"><div class="icon">&#128197;</div><h3>Easy Booking</h3><p>Chat with our AI assistant anytime &#8212; instant table reservations 24/7.</p></div>
+    <div class="site-card"><div class="icon">&#11088;</div><h3>4.9 Star Rating</h3><p>Over 2,000 happy customers. Rated best restaurant in the city 2025.</p></div>
   </div>
-
-  <!-- CONFIG PANEL -->
   <div class="config">
-    <h3>⚙️ Connect Your Backend (Voxly Configuration)</h3>
-    <div class="cfg-row">
-      <input class="cfg-inp" id="backend-url" placeholder="https://voxly-chat-production.up.railway.app" value=""/>
-      <input class="cfg-inp" id="biz-name" placeholder="Business name..." value="City Garden Restaurant"/>
-      <button class="cfg-btn" onclick="saveConfig()">💾 Save</button>
-    </div>
-    <div style="font-size:11px;color:#666;margin-top:4px;">Leave backend URL blank to use simulated AI responses for demo. Add your Railway URL for live Claude AI.</div>
+    <input id="backend-url" value=""/>
+    <input id="biz-name" value="City Garden Restaurant"/>
   </div>
 </div>
 
-<!-- CHAT WIDGET -->
 <div class="chat-widget">
   <div class="chat-window" id="chat-window">
     <div class="chat-header">
-      <div class="agent-avatar">🤖</div>
+      <div class="agent-avatar">&#129302;</div>
       <div class="agent-info">
         <div class="agent-name" id="agent-name">City Garden AI</div>
-        <div class="agent-status"><div class="online-dot"></div>Online — typically replies instantly</div>
+        <div class="agent-status"><div class="online-dot"></div>Online &#8212; typically replies instantly</div>
       </div>
-      <button class="chat-close" onclick="toggleChat()">✕</button>
+      <button class="chat-close" onclick="toggleChat()">&#10005;</button>
     </div>
 
     <div class="chat-messages" id="messages">
-      <div class="msg ai">👋 Welcome to <strong id="biz-display">City Garden Restaurant</strong>! I'm your AI assistant.<br><br>How can I help you today?</div>
-      <div style="font-size:10px;color:#aaa;align-self:flex-start;margin-top:-6px;">Just now</div>
+      <div class="msg ai">&#128075; Welcome to <strong id="biz-display">City Garden Restaurant</strong>! I'm your AI assistant.<br><br>How can I help you today?</div>
     </div>
 
     <div class="quick-replies" id="quick-replies">
-      <button class="qr" onclick="sendQuick('Book a table')">📅 Book a table</button>
-      <button class="qr" onclick="sendQuick('View the menu')">🍽️ Menu</button>
-      <button class="qr" onclick="sendQuick('What are your hours?')">🕐 Hours</button>
-      <button class="qr" onclick="sendQuick('Where are you located?')">📍 Location</button>
+      <button class="qr" onclick="sendQuick('Book a table')">&#128197; Book a table</button>
+      <button class="qr" onclick="sendQuick('View the menu')">&#127869;&#65039; Menu</button>
+      <button class="qr" onclick="sendQuick('What are your hours?')">&#128336; Hours</button>
+      <button class="qr" onclick="sendQuick('Where are you located?')">&#128205; Location</button>
     </div>
 
-    <button class="wa-btn" onclick="openWhatsApp()">
-      💬 Continue on WhatsApp
-    </button>
+    <button class="wa-btn" onclick="openWhatsApp()">&#128172; Continue on WhatsApp</button>
 
     <div class="chat-input">
       <input type="text" id="msg-input" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendMsg()"/>
@@ -170,30 +121,120 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh;display:
   </div>
 
   <button class="chat-bubble" id="chat-bubble" onclick="toggleChat()">
-    <span id="bubble-icon">💬</span>
+    <span id="bubble-icon">&#128172;</span>
     <div class="notif" id="notif">1</div>
   </button>
 </div>
 
 <script>
-// CONFIG
-let backendUrl = '';
-let bizName = 'City Garden Restaurant';
-let sessionId = 'session-' + Date.now();
-let isOpen = false;
-let msgCount = 0;
-
-function saveConfig() {
-  backendUrl = document.getElementById('backend-url').value.trim();
-  bizName = document.getElementById('biz-name').value.trim() || 'Voxly Demo';
-  document.getElementById('agent-name').textContent = bizName + ' AI';
-  document.getElementById('biz-display').textContent = bizName;
-  alert('✅ Config saved! Chat will now use ' + (backendUrl ? 'your backend' : 'demo mode'));
-}
+var backendUrl = '';
+var sessionId = 'session-' + Date.now();
+var isOpen = false;
+var bookingStep = 0;
 
 function toggleChat() {
   isOpen = !isOpen;
   document.getElementById('chat-window').classList.toggle('open', isOpen);
-  document.getElementById('bubble-icon').textContent = isOpen ? '✕' : '💬';
+  document.getElementById('bubble-icon').textContent = isOpen ? '\u2715' : '\uD83D\uDCAC';
   document.getElementById('chat-bubble').classList.toggle('open', isOpen);
-  document.getElementById('notif'
+  document.getElementById('notif').style.display = isOpen ? 'none' : 'flex';
+}
+
+function sendQuick(text) {
+  document.getElementById('msg-input').value = text;
+  document.getElementById('quick-replies').style.display = 'none';
+  sendMsg();
+}
+
+async function sendMsg() {
+  var input = document.getElementById('msg-input');
+  var text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  addMsg(text, 'user');
+  var typingId = showTyping();
+  var reply = '';
+  if (backendUrl) {
+    try {
+      var res = await fetch(backendUrl + '/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, sessionId: sessionId })
+      });
+      var data = await res.json();
+      reply = data.reply || 'Thank you for your message!';
+    } catch (e) {
+      reply = getDemoResponse(text);
+    }
+  } else {
+    await new Promise(function(r){ setTimeout(r, 800 + Math.random() * 800); });
+    reply = getDemoResponse(text);
+  }
+  removeTyping(typingId);
+  addMsg(reply, 'ai');
+}
+
+function has(t, words) { return words.some(function(w){ return t.indexOf(w) !== -1; }); }
+
+function getDemoResponse(text) {
+  var t = text.toLowerCase();
+  var phone = /\d{7,}/.test(t.replace(/[\s-]/g, ''));
+  if (bookingStep === 1) { bookingStep = 2; return "Lovely! What date and time would you like?"; }
+  if (bookingStep === 2) { bookingStep = 3; return "Got it. Could I have your name and a contact number to confirm the reservation?"; }
+  if (bookingStep === 3 && (phone || t.split(' ').length >= 2)) {
+    bookingStep = 0;
+    return "Thank you! Your table request has been received and the restaurant owner has been notified instantly. You will get a confirmation on WhatsApp shortly. Anything else I can help with?";
+  }
+  if (has(t, ['book', 'reserv', 'table for', 'a table'])) { bookingStep = 1; return "I would love to help you book a table! How many people will be dining?"; }
+  if (has(t, ['cancel', 'reschedule', 'modify'])) return "No problem. Please share your name and booking time, and I will pass the change to our team right away.";
+  if (has(t, ['vegetarian', 'vegan', 'veggie', 'halal', 'gluten', 'allerg', 'dietary'])) return "Yes! We have vegetarian and vegan dishes, and our kitchen can accommodate gluten-free and allergy requests. Would you like to reserve a table?";
+  if (has(t, ['dog', 'pet'])) return "Well-behaved dogs are welcome on our outdoor terrace. Would you like me to reserve a terrace table?";
+  if (has(t, ['park'])) return "Yes, free parking is available behind the restaurant, plus street parking nearby. Would you like to book a table?";
+  if (has(t, ['deliver', 'takeaway', 'take away', 'takeout', 'order'])) return "We offer takeaway and delivery within 5 km. Would you like to place an order?";
+  if (has(t, ['kid', 'child', 'baby', 'family'])) return "Families are very welcome! We have high chairs and a kids menu. Would you like to book a table?";
+  if (has(t, ['birthday', 'party', 'event', 'group', 'celebrat', 'private'])) return "We would be delighted to host your celebration! We have a private dining area for groups of 10 or more. How many guests, and on which date?";
+  if (has(t, ['price', 'cost', 'how much', 'expensive', 'cheap', 'budget'])) return "Our mains range from $18 to $45, and our prix-fixe menu is $55 per person including dessert. Would you like to book?";
+  if (has(t, ['menu', 'food', 'eat', 'special', 'dish', 'serve', 'recommend'])) return "Our menu features fresh seasonal cuisine! Today's specials include grilled salmon with lemon butter and a classic beef tenderloin. Shall I book a table so you can try them?";
+  if (has(t, ['where', 'location', 'address', 'direction', 'find you'])) return "We are at 123 Main Street, downtown, with easy parking nearby. Would you like to reserve a table?";
+  if (has(t, ['hour', 'open', 'close', 'what time', 'when'])) return "We are open Monday to Saturday 11AM-10PM and Sunday 12PM-9PM. Would you like to make a reservation?";
+  if (has(t, ['wifi', 'wi-fi', 'internet'])) return "Yes, we offer free Wi-Fi for all guests.";
+  if (has(t, ['pay', 'card', 'cash', 'visa'])) return "We accept cash and all major credit and debit cards.";
+  if (has(t, ['human', 'person', 'manager', 'owner', 'staff', 'speak to', 'call me'])) return "Of course. I will alert our team now and someone will contact you shortly. May I have your name and phone number?";
+  if (has(t, ['thank', 'great', 'perfect', 'bye'])) return "You are very welcome! We look forward to seeing you at City Garden.";
+  if (has(t, ['hello', 'hey', 'salam']) || t === 'hi') return "Hello! Welcome to City Garden Restaurant. I can help with bookings, our menu, hours and more. What would you like to know?";
+  return "Thanks for your question! I will pass it to our team so they can reply properly. In the meantime I can help with bookings, our menu, hours and location. Could I also take your name and phone number?";
+}
+
+function addMsg(text, type) {
+  var msgs = document.getElementById('messages');
+  var div = document.createElement('div');
+  div.className = 'msg ' + type;
+  if (type === 'user') { div.textContent = text; } else { div.innerHTML = text; }
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  var msgs = document.getElementById('messages');
+  var id = 'typing-' + Date.now();
+  var div = document.createElement('div');
+  div.id = id;
+  div.className = 'msg typing';
+  div.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return id;
+}
+
+function removeTyping(id) {
+  var el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function openWhatsApp() {
+  var msg = encodeURIComponent("Hi! I was just chatting with your AI assistant on your website. I'd like to continue our conversation.");
+  window.open('https://wa.me/?text=' + msg, '_blank');
+}
+</script>
+</body>
+</html>
