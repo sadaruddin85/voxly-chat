@@ -25,6 +25,7 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh;display:
 .site-card h3{font-size:15px;font-weight:700;margin-bottom:6px;}
 .site-card p{font-size:12px;color:#666;line-height:1.6;}
 
+@media(max-width:700px){.site-content{grid-template-columns:1fr;padding:20px 16px;}.site-hero h1{font-size:26px;}.site-nav{display:none;}.chat-window{width:calc(100vw - 40px);}}
 /* CHAT WIDGET */
 .chat-widget{position:fixed;bottom:28px;right:28px;z-index:1000;}
 .chat-bubble{width:60px;height:60px;background:linear-gradient(135deg,#4f8cff,#7b5cff);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 32px #4f8cff60;transition:all .2s;font-size:26px;border:none;}
@@ -89,7 +90,7 @@ body{font-family:'Inter',sans-serif;background:#f0f4f8;min-height:100vh;display:
 .wa-btn:hover{background:#1da851;}
 
 /* CONFIG PANEL */
-.config{background:#1a1a2e;padding:20px 28px;border-top:1px solid #333;}
+.config{display:none;background:#1a1a2e;padding:20px 28px;border-top:1px solid #333;}
 .config h3{color:#4f8cff;font-size:13px;margin-bottom:12px;}
 .cfg-row{display:flex;gap:10px;margin-bottom:8px;}
 .cfg-inp{flex:1;background:#0d0d1a;border:1px solid #333;border-radius:8px;padding:8px 12px;color:#e8edf5;font-size:12px;font-family:monospace;outline:none;}
@@ -182,16 +183,6 @@ let sessionId = 'session-' + Date.now();
 let isOpen = false;
 let msgCount = 0;
 
-// Demo AI responses when no backend
-const demoResponses = [
-  "I'd be happy to help you book a table! How many people will be dining, and what date and time works for you?",
-  "Our restaurant is open Monday to Saturday 11AM-10PM, and Sunday 12PM-9PM. We're located at 123 Main Street downtown.",
-  "For a party of {n}, I'll need your name, preferred date and time, and a contact number to confirm the reservation.",
-  "Great choice! Our chef's specials today include grilled salmon with lemon butter, and a classic beef tenderloin. Would you like to make a reservation?",
-  "I've noted your reservation request. To confirm, could you please provide your name and a callback number?",
-  "Thank you! Your reservation has been noted. You'll receive a confirmation shortly. Is there anything else I can help you with?",
-];
-
 function saveConfig() {
   backendUrl = document.getElementById('backend-url').value.trim();
   bizName = document.getElementById('biz-name').value.trim() || 'Voxly Demo';
@@ -205,103 +196,4 @@ function toggleChat() {
   document.getElementById('chat-window').classList.toggle('open', isOpen);
   document.getElementById('bubble-icon').textContent = isOpen ? '✕' : '💬';
   document.getElementById('chat-bubble').classList.toggle('open', isOpen);
-  document.getElementById('notif').style.display = isOpen ? 'none' : 'flex';
-}
-
-function sendQuick(text) {
-  document.getElementById('msg-input').value = text;
-  document.getElementById('quick-replies').style.display = 'none';
-  sendMsg();
-}
-
-async function sendMsg() {
-  const input = document.getElementById('msg-input');
-  const text = input.value.trim();
-  if (!text) return;
-  input.value = '';
-  msgCount++;
-
-  // Add user message
-  addMsg(text, 'user');
-
-  // Show typing
-  const typingId = showTyping();
-
-  // Get AI response
-  let reply = '';
-  if (backendUrl) {
-    try {
-      const res = await fetch(backendUrl + '/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, sessionId })
-      });
-      const data = await res.json();
-      reply = data.reply || 'Thank you for your message!';
-    } catch(e) {
-      reply = getDemoResponse(text);
-    }
-  } else {
-    await new Promise(r => setTimeout(r, 800 + Math.random()*800));
-    reply = getDemoResponse(text);
-  }
-
-  removeTyping(typingId);
-  addMsg(reply, 'ai');
-}
-
-function getDemoResponse(text) {
-  const t = text.toLowerCase();
-  if (t.includes('book') || t.includes('reserv') || t.includes('table'))
-    return "I'd love to help you book a table! 🍽️ How many people will be dining, and what date and time works best for you?";
-  if (t.includes('hour') || t.includes('open') || t.includes('time'))
-    return `We're open Monday to Saturday 11AM–10PM and Sunday 12PM–9PM. Would you like to make a reservation?`;
-  if (t.includes('menu') || t.includes('food') || t.includes('eat'))
-    return "Our menu features fresh seasonal cuisine! Today's specials include grilled salmon and beef tenderloin. Shall I help you book a table to experience it?";
-  if (t.includes('where') || t.includes('location') || t.includes('address'))
-    return "We're located at 123 Main Street, downtown. Easy parking is available nearby. Would you like to reserve a table?";
-  if (t.includes('price') || t.includes('cost') || t.includes('how much'))
-    return "Our mains range from $18-45. We offer a great value prix-fixe menu at $55 per person including dessert. Would you like to book?";
-  if (t.includes('name') || /\d{3}/.test(t))
-    return "Perfect, thank you! ✅ I've noted your details. Your reservation request has been received. We'll send you a confirmation. Is there anything else you need?";
-  return demoResponses[Math.floor(Math.random() * demoResponses.length)];
-}
-
-function addMsg(text, type) {
-  const msgs = document.getElementById('messages');
-  const div = document.createElement('div');
-  div.className = 'msg ' + type;
-  div.innerHTML = text;
-  msgs.appendChild(div);
-  const time = document.createElement('div');
-  time.style.cssText = 'font-size:10px;color:#aaa;align-self:'+(type==='user'?'flex-end':'flex-start')+';margin-top:-6px;';
-  time.textContent = 'Just now';
-  msgs.appendChild(time);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function showTyping() {
-  const msgs = document.getElementById('messages');
-  const id = 'typing-' + Date.now();
-  const div = document.createElement('div');
-  div.id = id;
-  div.className = 'msg typing';
-  div.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-  return id;
-}
-
-function removeTyping(id) {
-  const el = document.getElementById(id);
-  if (el) el.remove();
-}
-
-function openWhatsApp() {
-  const msg = encodeURIComponent(`Hi! I was just chatting with your AI assistant on your website. I'd like to continue our conversation.`);
-  window.open(`https://wa.me/?text=${msg}`, '_blank');
-}
-</script>
-</body>
-</html>
-
+  document.getElementById('notif'
